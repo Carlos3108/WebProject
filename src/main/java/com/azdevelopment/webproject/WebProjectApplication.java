@@ -1,12 +1,14 @@
 package com.azdevelopment.webproject;
 
+import com.mongodb.MongoClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebprojectApplication {
+public class WebProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebprojectApplication.class, args);
+		SpringApplication.run(WebProjectApplication.class, args);
+		MongoClient cliente = new MongoClient();
 	}
 }
