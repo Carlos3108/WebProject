@@ -1,6 +1,5 @@
 package com.azdevelopment.webproject;
 
-import com.mongodb.MongoClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +8,5 @@ public class WebProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebProjectApplication.class, args);
-		MongoClient cliente = new MongoClient();
 	}
 }
