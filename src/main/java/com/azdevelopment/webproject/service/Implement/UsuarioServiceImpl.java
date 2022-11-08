@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    @Autowired
     private UsuarioRepository usuarioRepository;
     @Override
     public List<Usuario> obterUsuario() {
