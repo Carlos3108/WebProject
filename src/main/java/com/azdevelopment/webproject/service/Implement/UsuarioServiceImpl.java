@@ -3,15 +3,21 @@ package com.azdevelopment.webproject.service.Implement;
 import com.azdevelopment.webproject.model.Usuario;
 import com.azdevelopment.webproject.repository.UsuarioRepository;
 import com.azdevelopment.webproject.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @Service
+@AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
     @Override
     public List<Usuario> obterUsuario() {
         return this.usuarioRepository.findAll();
@@ -27,5 +33,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario criar(Usuario usuario) {
         return this.usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public ResponseEntity<String> excluir(String id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+        } else {
+            return status(HttpStatus.NOT_FOUND).body("Usuario não encontrado.");
+        }
+        return status(HttpStatus.OK).body("Usuario excluido com sucesso.");
     }
 }
