@@ -2,7 +2,7 @@ package com.azdevelopment.webproject.controller;
 
 import com.azdevelopment.webproject.model.Usuario;
 import com.azdevelopment.webproject.service.UsuarioService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -10,12 +10,8 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
-
+    @Autowired
+    private UsuarioService usuarioService;
     @GetMapping
     public List<Usuario> obterUsuarios(){
         return this.usuarioService.obterUsuario();
@@ -24,14 +20,9 @@ public class UsuarioController {
     public Usuario obterID(@PathVariable String id){
         return this.usuarioService.obterID(id);
     }
-    @PutMapping
+    @PostMapping
     public Usuario criar(@RequestBody Usuario usuario){
         return this.usuarioService.criar(usuario);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluir(@PathVariable String id){
-        return this.usuarioService.excluir(id);
     }
 
 }
