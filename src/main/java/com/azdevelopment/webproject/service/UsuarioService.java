@@ -9,4 +9,5 @@ public interface UsuarioService {
     Usuario obterID(String id);
     Usuario criar(Usuario usuario);
     ResponseEntity<String> excluir(String id);
+    ResponseEntity<String> atualizarUsuario(Usuario usuario, String id);
 }

@@ -24,7 +24,7 @@ public class UsuarioController {
     public Usuario obterID(@PathVariable String id){
         return this.usuarioService.obterID(id);
     }
-    @PutMapping
+    @PostMapping
     public Usuario criar(@RequestBody Usuario usuario){
         return this.usuarioService.criar(usuario);
     }
@@ -33,5 +33,9 @@ public class UsuarioController {
     public ResponseEntity<String> excluir(@PathVariable String id){
         return this.usuarioService.excluir(id);
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<String> atualizarUsuario(@RequestBody Usuario usuario,
+                                            @PathVariable("id") String id){
+        return usuarioService.atualizarUsuario(usuario, id);
+    }
 }

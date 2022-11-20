@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -43,5 +44,29 @@ public class UsuarioServiceImpl implements UsuarioService {
             return status(HttpStatus.NOT_FOUND).body("Usuario não encontrado.");
         }
         return status(HttpStatus.OK).body("Usuario excluido com sucesso.");
+    }
+
+    @Override
+    public ResponseEntity<String> atualizarUsuario(Usuario usuario, String id){
+        Optional<Usuario> user = usuarioRepository.findById(id);
+        if (user.isPresent()){
+            Usuario obj = user.get();
+            if (usuario.getNome() != null){
+                obj.setNome(usuario.getNome());
+            }
+            if (usuario.getNascimento() != null){
+                obj.setNascimento(usuario.getNascimento());
+            }
+            if (usuario.getEmail() != null){
+                obj.setEmail(usuario.getEmail());
+            }
+            if (usuario.getSenha() != null){
+                obj.setSenha(usuario.getSenha());
+            }
+            usuarioRepository.save(obj);
+        } else {
+            return status(HttpStatus.BAD_REQUEST).body("Usuario não encontrado.");
+        }
+        return status(HttpStatus.OK).body("Usuario atualizado com sucesso.");
     }
 }
