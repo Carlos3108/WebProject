@@ -1,5 +1,7 @@
 package com.azdevelopment.webproject.service.Implement;
 
+import com.azdevelopment.webproject.dto.UsuarioDTO;
+import com.azdevelopment.webproject.mapper.UsuarioMapper;
 import com.azdevelopment.webproject.model.Usuario;
 import com.azdevelopment.webproject.repository.UsuarioRepository;
 import com.azdevelopment.webproject.service.UsuarioService;
@@ -19,9 +21,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private UsuarioMapper usuarioMapper;
+
     @Override
-    public List<Usuario> obterUsuario() {
-        return this.usuarioRepository.findAll();
+    public List<UsuarioDTO> obterUsuario() {
+        List<Usuario> usuarios = this.usuarioRepository.findAll();
+        return usuarioMapper.from(usuarios);
     }
 
     @Override

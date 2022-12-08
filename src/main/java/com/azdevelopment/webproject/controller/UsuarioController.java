@@ -1,5 +1,6 @@
 package com.azdevelopment.webproject.controller;
 
+import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.model.Usuario;
 import com.azdevelopment.webproject.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> obterUsuarios(){
+    public List<UsuarioDTO> obterUsuarios(){
         return this.usuarioService.obterUsuario();
     }
     @GetMapping("/{id}")
