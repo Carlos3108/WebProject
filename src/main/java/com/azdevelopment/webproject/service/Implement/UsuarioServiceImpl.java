@@ -30,10 +30,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario obterID(String id) {
-        return this.usuarioRepository
+    public UsuarioDTO obterID(String id) {
+        Usuario usuarios = this.usuarioRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não existe."));
+        return usuarioMapper.from(usuarios);
     }
 
     @Override

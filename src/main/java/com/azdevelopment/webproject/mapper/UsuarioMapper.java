@@ -21,4 +21,13 @@ public class UsuarioMapper {
         });
         return usuariosDTO;
     }
+
+    public UsuarioDTO from(Usuario usuario){
+        return UsuarioDTO.builder()
+                .id(usuario.getId())
+                .nome(usuario.getNome())
+                .email(usuario.getEmail())
+                .nascimento(usuario.getNascimento())
+                .build();
+    }
 }

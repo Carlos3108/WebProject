@@ -22,7 +22,7 @@ public class UsuarioController {
         return this.usuarioService.obterUsuario();
     }
     @GetMapping("/{id}")
-    public Usuario obterID(@PathVariable String id){
+    public UsuarioDTO obterID(@PathVariable String id){
         return this.usuarioService.obterID(id);
     }
     @PostMapping
