@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -55,14 +56,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<String> atualizarUsuario(UsuarioDTO usuario){
+    public ResponseEntity<String> atualizarUsuario(UsuarioDTO usuario) {
         Optional<Usuario> user = usuarioRepository.findById(usuario.getId());
-        if (user.isPresent()){
+        if (user.isPresent()) {
             Usuario obj = user.get();
-                obj.setNome(usuario.getNome());
-                obj.setNascimento(usuario.getNascimento());
-                obj.setEmail(usuario.getEmail());
-                obj.setSenha(usuario.getSenha());
+            obj.setNome(usuario.getNome());
+            obj.setNascimento(usuario.getNascimento());
+            obj.setEmail(usuario.getEmail());
+            obj.setSenha(usuario.getSenha());
             usuarioRepository.save(obj);
         } else {
             return status(HttpStatus.BAD_REQUEST).body("Usuario não encontrado.");

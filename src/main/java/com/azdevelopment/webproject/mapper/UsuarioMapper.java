@@ -3,6 +3,7 @@ package com.azdevelopment.webproject.mapper;
 import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.model.Usuario;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class UsuarioMapper {
         return usuariosDTO;
     }
 
-    public UsuarioDTO from(Usuario usuario){
+    public UsuarioDTO from(Usuario usuario) {
         return UsuarioDTO.builder()
                 .id(usuario.getId())
                 .nome(usuario.getNome())
