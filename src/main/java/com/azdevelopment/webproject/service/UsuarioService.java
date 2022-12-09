@@ -8,7 +8,7 @@ import java.util.List;
 public interface UsuarioService {
     List<UsuarioDTO> obterUsuario();
     UsuarioDTO obterID(String id);
-    Usuario criar(Usuario usuario);
+    UsuarioDTO criar(UsuarioDTO usuario);
     ResponseEntity<String> excluir(String id);
-    ResponseEntity<String> atualizarUsuario(Usuario usuario, String id);
+    ResponseEntity<String> atualizarUsuario(UsuarioDTO usuario);
 }

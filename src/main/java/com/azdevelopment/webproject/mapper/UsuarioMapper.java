@@ -30,4 +30,13 @@ public class UsuarioMapper {
                 .nascimento(usuario.getNascimento())
                 .build();
     }
+
+    public Usuario to(UsuarioDTO usuario) {
+        Usuario usuarioEntity = new Usuario();
+        usuarioEntity.setNome(usuario.getNome());
+        usuarioEntity.setEmail(usuario.getEmail());
+        usuarioEntity.setNascimento(usuario.getNascimento());
+        usuarioEntity.setSenha(usuario.getSenha());
+        return usuarioEntity;
+    }
 }

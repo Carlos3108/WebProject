@@ -38,8 +38,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario criar(Usuario usuario) {
-        return this.usuarioRepository.save(usuario);
+    public UsuarioDTO criar(UsuarioDTO usuario) {
+        Usuario usuarioEntity = usuarioMapper.to(usuario);
+        Usuario save = this.usuarioRepository.save(usuarioEntity);
+        return usuarioMapper.from(save);
     }
 
     @Transactional
@@ -53,22 +55,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<String> atualizarUsuario(Usuario usuario, String id){
-        Optional<Usuario> user = usuarioRepository.findById(id);
+    public ResponseEntity<String> atualizarUsuario(UsuarioDTO usuario){
+        Optional<Usuario> user = usuarioRepository.findById(usuario.getId());
         if (user.isPresent()){
             Usuario obj = user.get();
-            if (usuario.getNome() != null){
                 obj.setNome(usuario.getNome());
-            }
-            if (usuario.getNascimento() != null){
                 obj.setNascimento(usuario.getNascimento());
-            }
-            if (usuario.getEmail() != null){
                 obj.setEmail(usuario.getEmail());
-            }
-            if (usuario.getSenha() != null){
                 obj.setSenha(usuario.getSenha());
-            }
             usuarioRepository.save(obj);
         } else {
             return status(HttpStatus.BAD_REQUEST).body("Usuario não encontrado.");

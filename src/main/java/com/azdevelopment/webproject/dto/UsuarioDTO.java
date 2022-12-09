@@ -17,5 +17,6 @@ public class UsuarioDTO {
     private String nome;
     private Date nascimento;
     private String email;
+    private String senha;
 
 }
