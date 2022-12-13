@@ -1,9 +1,7 @@
 package com.azdevelopment.webproject.mapper;
 
 import com.azdevelopment.webproject.dto.ProdutoDTO;
-import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.model.Produto;
-import com.azdevelopment.webproject.model.Usuario;
 import org.springframework.stereotype.Component;
 
 @Component
