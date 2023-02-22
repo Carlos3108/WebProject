@@ -14,5 +14,5 @@ public interface UsuarioService {
 
     ResponseEntity<String> excluir(String id);
 
-    ResponseEntity<String> atualizarUsuario(UsuarioDTO usuario);
+    UsuarioDTO atualizarUsuario(UsuarioDTO usuario);
 }
