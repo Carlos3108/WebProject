@@ -4,7 +4,8 @@ import lombok.Getter;
 
 public enum WebProjectError {
 
-    USER_NOT_FOUND("Usuario não encontrado.");
+    USER_NOT_FOUND("Usuario não encontrado."),
+    VALUE_IS_INVALID("Valor invalido.");
     @Getter
     private String message;
 
