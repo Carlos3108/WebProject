@@ -2,6 +2,7 @@ package com.azdevelopment.webproject.controller;
 
 import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.service.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,10 +43,10 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuario) throws Exception {
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@RequestBody UsuarioDTO usuario) throws Exception {
         if (!Objects.nonNull(usuario.getId())) {
             throw new Exception("Ao atualizar o usuario o ID deve ser preenchido");
         }
-        return usuarioService.atualizarUsuario(usuario);
+        return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuario));
     }
 }
