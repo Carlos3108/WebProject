@@ -63,13 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuario) {
         Usuario user = usuarioRepository.findById(usuario.getId())
                 .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
-            Usuario obj = new Usuario();
-            obj.setNome(user.getNome());
-            obj.setNascimento(user.getNascimento());
-            obj.setEmail(user.getEmail());
-            obj.setSenha(user.getSenha());
-            Usuario userSaved = usuarioRepository.save(obj);
-
-        return usuarioMapper.from(userSaved);
+            Usuario userSaved = usuarioRepository.save(user);
+        return usuarioMapper.fromUpdate(usuario, userSaved);
     }
 }
