@@ -11,12 +11,12 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
+public class UserDTO {
 
     private String id;
-    private String nome;
-    private Date nascimento;
+    private String name;
+    private Date birth;
     private String email;
-    private String senha;
+    private String password;
 
 }
