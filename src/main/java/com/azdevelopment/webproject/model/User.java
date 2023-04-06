@@ -8,13 +8,13 @@ import java.util.Date;
 
 @Data
 @Document()
-public class Usuario {
+public class User {
     @Id
     private String id;
-    private String nome;
-    private Date nascimento;
+    private String name;
+    private Date birth;
     private String email;
-    private String senha;
+    private String password;
 }
 
 

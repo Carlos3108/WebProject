@@ -3,7 +3,7 @@ package com.azdevelopment.webproject.mapper;
 import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.exception.WebProjectError;
 import com.azdevelopment.webproject.exception.WebProjectException;
-import com.azdevelopment.webproject.model.Usuario;
+import com.azdevelopment.webproject.model.User;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
@@ -14,37 +14,37 @@ import java.util.List;
 @Component
 public class UsuarioMapper {
 
-    public List<UsuarioDTO> from(List<Usuario> usuarios) {
+    public List<UsuarioDTO> from(List<User> users) {
         List<UsuarioDTO> usuariosDTO = new ArrayList<>();
-        usuarios.forEach(usuario -> {
+        users.forEach(user -> {
             usuariosDTO.add(UsuarioDTO.builder()
-                    .id(usuario.getId())
-                    .nome(usuario.getNome())
-                    .email(usuario.getEmail())
-                    .nascimento(usuario.getNascimento())
+                    .id(user.getId())
+                    .nome(user.getNome())
+                    .email(user.getEmail())
+                    .nascimento(user.getNascimento())
                     .build());
         });
         return usuariosDTO;
     }
 
-    public UsuarioDTO from(Usuario usuario) {
+    public UsuarioDTO from(User user) {
         return UsuarioDTO.builder()
-                .id(usuario.getId())
-                .nome(usuario.getNome())
-                .email(usuario.getEmail())
-                .nascimento(usuario.getNascimento())
+                .id(user.getId())
+                .nome(user.getNome())
+                .email(user.getEmail())
+                .nascimento(user.getNascimento())
                 .build();
     }
 
-    public UsuarioDTO fromUpdate(UsuarioDTO usuarioDTO, Usuario usuario) {
+    public UsuarioDTO fromUpdate(UsuarioDTO usuarioDTO, User user) {
 
         return UsuarioDTO.builder()
-                .id(usuario.getId())
-                .nome(isDiferent(usuarioDTO.getNome(), usuario.getNome()))
-                .email(isDiferent(usuarioDTO.getEmail(), usuario.getEmail()))
+                .id(user.getId())
+                .nome(isDiferent(usuarioDTO.getNome(), user.getNome()))
+                .email(isDiferent(usuarioDTO.getEmail(), user.getEmail()))
                 .nascimento(new Date(isDiferent(usuarioDTO.getNascimento().toString(),
-                        usuario.getNascimento().toString())))
-                .senha(isDiferent(usuarioDTO.getSenha(), usuario.getSenha()))
+                        user.getNascimento().toString())))
+                .senha(isDiferent(usuarioDTO.getSenha(), user.getSenha()))
                 .build();
     }
 
@@ -62,12 +62,12 @@ public class UsuarioMapper {
         return value;
     }
 
-    public Usuario to(UsuarioDTO usuario) {
-        Usuario usuarioEntity = new Usuario();
-        usuarioEntity.setNome(usuario.getNome());
-        usuarioEntity.setEmail(usuario.getEmail());
-        usuarioEntity.setNascimento(usuario.getNascimento());
-        usuarioEntity.setSenha(usuario.getSenha());
-        return usuarioEntity;
+    public User to(UsuarioDTO usuario) {
+        User userEntity = new User();
+        userEntity.setNome(usuario.getNome());
+        userEntity.setEmail(usuario.getEmail());
+        userEntity.setNascimento(usuario.getNascimento());
+        userEntity.setSenha(usuario.getSenha());
+        return userEntity;
     }
 }

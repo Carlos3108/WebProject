@@ -7,7 +7,7 @@ public enum WebProjectError {
     USER_NOT_FOUND("Usuario não encontrado."),
     VALUE_IS_INVALID("Valor invalido.");
     @Getter
-    private String message;
+    private final String message;
 
     WebProjectError(String message) {
         this.message = message;

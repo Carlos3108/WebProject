@@ -4,7 +4,7 @@ import com.azdevelopment.webproject.dto.UsuarioDTO;
 import com.azdevelopment.webproject.exception.WebProjectError;
 import com.azdevelopment.webproject.exception.WebProjectException;
 import com.azdevelopment.webproject.mapper.UsuarioMapper;
-import com.azdevelopment.webproject.model.Usuario;
+import com.azdevelopment.webproject.model.User;
 import com.azdevelopment.webproject.repository.UsuarioRepository;
 import com.azdevelopment.webproject.service.UsuarioService;
 import lombok.AllArgsConstructor;
@@ -28,13 +28,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> obterUsuario() {
-        List<Usuario> usuarios = this.usuarioRepository.findAll();
-        return usuarioMapper.from(usuarios);
+        List<User> users = this.usuarioRepository.findAll();
+        return usuarioMapper.from(users);
     }
 
     @Override
     public UsuarioDTO obterID(String id) {
-        Usuario usuarios = this.usuarioRepository
+        User usuarios = this.usuarioRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não existe."));
         return usuarioMapper.from(usuarios);
@@ -42,8 +42,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO criar(UsuarioDTO usuario) {
-        Usuario usuarioEntity = usuarioMapper.to(usuario);
-        Usuario save = this.usuarioRepository.save(usuarioEntity);
+        User userEntity = usuarioMapper.to(usuario);
+        User save = this.usuarioRepository.save(userEntity);
         return usuarioMapper.from(save);
     }
 
@@ -61,9 +61,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @SneakyThrows
     @Transactional
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuario) {
-        Usuario user = usuarioRepository.findById(usuario.getId())
+        User user = usuarioRepository.findById(usuario.getId())
                 .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
-            Usuario userSaved = usuarioRepository.save(user);
+            User userSaved = usuarioRepository.save(user);
         return usuarioMapper.fromUpdate(usuario, userSaved);
     }
 }
