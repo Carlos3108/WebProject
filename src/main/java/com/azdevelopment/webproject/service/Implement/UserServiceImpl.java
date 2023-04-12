@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -59,9 +60,11 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Transactional
     public UserDTO update(UserDTO userDTO) {
-        User user = userRepository.findById(userDTO.getId())
+        User oldUser = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
-        User userSaved = userRepository.save(user);
-        return userMapper.fromUpdate(userDTO, userSaved);
+        User user = userMapper.fromUpdate(userDTO,oldUser);
+        User userSaved = Optional.of(userRepository.save(user))
+                .orElseThrow(() -> new WebProjectException(WebProjectError.ERROR_UPDATE));
+        return userMapper.from(userSaved);
     }
 }

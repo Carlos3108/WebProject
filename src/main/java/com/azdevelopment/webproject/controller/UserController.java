@@ -39,10 +39,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO user) throws Exception {
-        if (!Objects.nonNull(user.getId())) {
-            throw new Exception("When updating the user, the ID must be filled in.");
-        }
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO user){
         return ResponseEntity.ok(this.userService.update(user));
     }
 }
