@@ -2,7 +2,6 @@ package com.azdevelopment.webproject.controller;
 
 import com.azdevelopment.webproject.dto.UserDTO;
 import com.azdevelopment.webproject.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +29,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDTO create(@RequestBody UserDTO user) throws Exception {
-        if (!Objects.isNull(user.getId())) {
-            throw new Exception("Ao criar o usuario o ID deve ser Null");
-        }
-        return this.userService.create(user);
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO user){
+        return userService.create(user);
     }
 
     @DeleteMapping("/{id}")

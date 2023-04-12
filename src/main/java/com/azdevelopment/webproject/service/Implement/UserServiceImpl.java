@@ -9,15 +9,12 @@ import com.azdevelopment.webproject.repository.UserRepository;
 import com.azdevelopment.webproject.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.http.ResponseEntity.status;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -43,10 +40,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO create(UserDTO user) {
-        User userEntity = userMapper.to(user);
-        User save = this.userRepository.save(userEntity);
-        return userMapper.from(save);
+    @SneakyThrows
+    public ResponseEntity<UserDTO> create(UserDTO user) {
+        if (!Objects.isNull(user.getId())) {
+            throw new WebProjectException(WebProjectError.ERROR_CREATING);
+        }
+            User userEntity = userMapper.to(user);
+            User save = this.userRepository.save(userEntity);
+            return ResponseEntity.ok(userMapper.from(save));
     }
 
     @Transactional
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
-            User userSaved = userRepository.save(user);
+        User userSaved = userRepository.save(user);
         return userMapper.fromUpdate(userDTO, userSaved);
     }
 }
