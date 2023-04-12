@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -33,10 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SneakyThrows
     public UserDTO getID(String id) {
         User user = this.userRepository
                 .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User does not exist."));
+                .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
         return userMapper.from(user);
     }
 
@@ -48,13 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public ResponseEntity<String> delete(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else {
-            return status(HttpStatus.NOT_FOUND).body("User not found.");
-        }
-        return status(HttpStatus.OK).body("User deleted successfully.");
+    public void delete(String id) {
+        userRepository.deleteById(id);
     }
 
     @Override

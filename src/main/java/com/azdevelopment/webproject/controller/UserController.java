@@ -2,6 +2,7 @@ package com.azdevelopment.webproject.controller;
 
 import com.azdevelopment.webproject.dto.UserDTO;
 import com.azdevelopment.webproject.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) {
-        return this.userService.delete(id);
+    public void delete(@PathVariable("id") String id)  {
+        userService.delete(id);
     }
 
     @PutMapping

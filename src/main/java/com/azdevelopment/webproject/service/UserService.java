@@ -1,9 +1,11 @@
 package com.azdevelopment.webproject.service;
 
 import com.azdevelopment.webproject.dto.UserDTO;
+import com.azdevelopment.webproject.model.User;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     List<UserDTO> getUser();
@@ -12,7 +14,7 @@ public interface UserService {
 
     UserDTO create(UserDTO user);
 
-    ResponseEntity<String> delete(String id);
+    void delete(String id);
 
     UserDTO update(UserDTO user);
 }
