@@ -36,16 +36,21 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDTO fromUpdate(UserDTO userDTO, User user) {
-
-        return UserDTO.builder()
+    public User fromUpdate(UserDTO userDTO ,User user) {
+        return User.builder()
                 .id(user.getId())
                 .name(isDiferent(userDTO.getName(), user.getName()))
                 .email(isDiferent(userDTO.getEmail(), user.getEmail()))
-                .birth(new Date(isDiferent(userDTO.getBirth().toString(),
-                        user.getBirth().toString())))
+                .birth(isDiferentDate(userDTO.getBirth(), user.getBirth()))
                 .password(isDiferent(userDTO.getPassword(), user.getPassword()))
                 .build();
+    }
+
+    private Date isDiferentDate(Date newBirth, Date oldBirth) {
+        if (newBirth != null && !newBirth.equals(oldBirth))
+            return newBirth;
+        else
+            return oldBirth;
     }
 
     private static String isDiferent(String newValue, String oldValue) {
@@ -62,12 +67,12 @@ public class UserMapper {
         return value;
     }
 
-    public User to(UserDTO user) {
-        User userEntity = new User();
-        userEntity.setName(user.getName());
-        userEntity.setEmail(user.getEmail());
-        userEntity.setBirth(user.getBirth());
-        userEntity.setPassword(user.getPassword());
-        return userEntity;
+    public User to(UserDTO userDTO) {
+        return User.builder()
+                .name(userDTO.getName())
+                .email(userDTO.getEmail())
+                .birth(userDTO.getBirth())
+                .password(userDTO.getPassword())
+                .build();
     }
 }

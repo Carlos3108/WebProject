@@ -10,9 +10,9 @@ public interface UserService {
 
     UserDTO getID(String id);
 
-    UserDTO create(UserDTO user);
+    ResponseEntity<UserDTO> create(UserDTO user);
 
-    ResponseEntity<String> delete(String id);
+    void delete(String id);
 
     UserDTO update(UserDTO user);
 }

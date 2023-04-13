@@ -9,14 +9,13 @@ import com.azdevelopment.webproject.repository.UserRepository;
 import com.azdevelopment.webproject.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.springframework.http.ResponseEntity.status;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,37 +32,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SneakyThrows
     public UserDTO getID(String id) {
         User user = this.userRepository
                 .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User does not exist."));
+                .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
         return userMapper.from(user);
     }
 
     @Override
-    public UserDTO create(UserDTO user) {
-        User userEntity = userMapper.to(user);
-        User save = this.userRepository.save(userEntity);
-        return userMapper.from(save);
+    @SneakyThrows
+    public ResponseEntity<UserDTO> create(UserDTO user) {
+        if (!Objects.isNull(user.getId())) {
+            throw new WebProjectException(WebProjectError.ERROR_CREATING);
+        }
+            User userEntity = userMapper.to(user);
+            User save = this.userRepository.save(userEntity);
+            return ResponseEntity.ok(userMapper.from(save));
     }
 
     @Transactional
-    public ResponseEntity<String> delete(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else {
-            return status(HttpStatus.NOT_FOUND).body("User not found.");
-        }
-        return status(HttpStatus.OK).body("User deleted successfully.");
+    public void delete(String id) {
+        userRepository.deleteById(id);
     }
 
     @Override
     @SneakyThrows
     @Transactional
     public UserDTO update(UserDTO userDTO) {
-        User user = userRepository.findById(userDTO.getId())
+        User oldUser = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
-            User userSaved = userRepository.save(user);
-        return userMapper.fromUpdate(userDTO, userSaved);
+        User user = userMapper.fromUpdate(userDTO,oldUser);
+        User userSaved = Optional.of(userRepository.save(user))
+                .orElseThrow(() -> new WebProjectException(WebProjectError.ERROR_UPDATE));
+        return userMapper.from(userSaved);
     }
 }
