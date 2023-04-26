@@ -46,13 +46,16 @@ public class UserServiceImpl implements UserService {
         if (!Objects.isNull(user.getId())) {
             throw new WebProjectException(WebProjectError.ERROR_CREATING);
         }
-            User userEntity = userMapper.to(user);
-            User save = this.userRepository.save(userEntity);
-            return ResponseEntity.ok(userMapper.from(save));
+        User userEntity = userMapper.to(user);
+        User save = this.userRepository.save(userEntity);
+        return ResponseEntity.ok(userMapper.from(save));
     }
 
     @Transactional
+    @SneakyThrows
     public void delete(String id) {
+        userRepository.findById(id)
+                .orElseThrow(() -> new WebProjectException(WebProjectError.USER_NOT_FOUND));
         userRepository.deleteById(id);
     }
 
