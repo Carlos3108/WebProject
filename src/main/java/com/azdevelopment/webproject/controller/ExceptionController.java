@@ -1,5 +1,9 @@
 package com.azdevelopment.webproject.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "500", description = "Error operation",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Object.class)))
+    })
     @ExceptionHandler
     public ResponseEntity<Object> exceptionHandler(RuntimeException e, WebRequest request) {
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(),
